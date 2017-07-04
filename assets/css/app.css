@@ -3,3 +3,8 @@ html {
 
 .view {
   margin: 0px 10px 30px 10px; }
+
+.dropzone {
+  color: white;
+  font-family: monospace;
+  max-height: 100px; }

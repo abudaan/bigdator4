@@ -21,7 +21,7 @@ const startsWith = R.invoker(1, 'startsWith');
 const sources = {
     main_js: './js/index.js',
     js: './js/**/*.js',
-    css: './scss/**/*.scss',
+    css: './sass/**/*.sass',
 };
 
 const targets = {
