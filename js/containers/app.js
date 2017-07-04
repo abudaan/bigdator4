@@ -12,9 +12,7 @@ class App extends Component {
     }
 
     dropHandler(acceptedFiles, rejectedFiles) {
-        if (acceptedFiles.length > 0) {
-            addSpecs(acceptedFiles);
-        }
+        addSpecs(acceptedFiles, rejectedFiles);
     }
 
     render() {
