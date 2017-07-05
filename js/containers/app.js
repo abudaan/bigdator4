@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import Mapping from '../components/mapping';
 import { addSpecs } from '../actions/actions';
+import getMapping from '../selectors/get_mapping';
 
 class App extends Component {
     constructor(props) {
@@ -23,20 +24,25 @@ class App extends Component {
             >
                 <p>Try dropping some files here, or click to select files to upload.</p>
             </Dropzone>
-            <Mapping specs={this.props.specs} />
+            <Mapping signals={this.props.signals} mapping={this.props.mapping} />
         </div>);
     }
 }
 
 const mapStateToProps = (state) => {
+    const signals = getMapping(state);
     const ui = state.ui;
     return {
+        signals,
         specs: ui.specs,
+        mapping: ui.mapping,
     };
 };
 
 App.propTypes = {
     specs: PropTypes.arrayOf(PropTypes.object).isRequired,
+    signals: PropTypes.arrayOf(PropTypes.object).isRequired,
+    mapping: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps)(App);

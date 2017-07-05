@@ -14,8 +14,9 @@ const readFiles = (index, files, parsedFiles, callback) => {
     reader.onload = (event) => {
         const json = JSON.parse(event.target.result);
         if (R.isNil(json.description)) {
-            json.description = file.name;
+            json.description = 'no description';
         }
+        json.fileName = file.name;
         readFiles(
             index + 1,
             files,

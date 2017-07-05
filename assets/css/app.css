@@ -8,3 +8,21 @@ html {
   color: white;
   font-family: monospace;
   max-height: 100px; }
+
+.mapping {
+  padding-bottom: 20px; }
+  .mapping table {
+    border-collapse: collapse;
+    width: 100%; }
+  .mapping th, .mapping tr, .mapping td {
+    border: 1px solid white; }
+  .mapping th {
+    line-height: 200%;
+    text-align: left; }
+    .mapping th:first-child {
+      text-align: center; }
+  .mapping tr.specname {
+    line-height: 150%;
+    text-align: center; }
+    .mapping tr.specname td {
+      font-weight: bold; }
