@@ -10,21 +10,24 @@ export default createSelector([getUI], (ui) => {
     } = ui;
 
     const signalsBySpec = R.map((spec) => {
-        const signals = R.map(s => s.name, spec.signals || []);
+        const signals = R.map(s => s.name, spec.signals);
         return {
             name: spec.fileName,
             signals,
         };
     }, specs);
 
-    const signals = R.map((spec) => {
-        const otherSignals = R.filter(s => s.name !== spec.name, signalsBySpec);
+    const specsTable = R.map((spec) => {
+        if (R.length(spec.signals) === 0) {
+            return null;
+        }
+        const otherSpecs = R.filter(s => s.name !== spec.name && s.signals.length > 0, signalsBySpec);
         return {
             name: spec.name,
             signals: spec.signals,
-            otherSignals,
+            otherSpecs,
         };
     }, signalsBySpec);
-
-    return signals;
+    // console.log(R.reject(R.isNil, specsTable));
+    return R.reject(R.isNil, specsTable);
 });

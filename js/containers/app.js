@@ -24,16 +24,16 @@ class App extends Component {
             >
                 <p>Try dropping some files here, or click to select files to upload.</p>
             </Dropzone>
-            <Mapping signals={this.props.signals} mapping={this.props.mapping} />
+            <Mapping specsTable={this.props.specsTable} mapping={this.props.mapping} />
         </div>);
     }
 }
 
 const mapStateToProps = (state) => {
-    const signals = getMapping(state);
+    const specsTable = getMapping(state);
     const ui = state.ui;
     return {
-        signals,
+        specsTable,
         specs: ui.specs,
         mapping: ui.mapping,
     };
@@ -41,8 +41,8 @@ const mapStateToProps = (state) => {
 
 App.propTypes = {
     specs: PropTypes.arrayOf(PropTypes.object).isRequired,
-    signals: PropTypes.arrayOf(PropTypes.object).isRequired,
     mapping: PropTypes.arrayOf(PropTypes.object).isRequired,
+    specsTable: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps)(App);

@@ -16,20 +16,29 @@ html
 
     table
         border-collapse: collapse
-        width: 100%
+        // width: 100%
+
 
     th, tr, td
         border: 1px solid white
+        padding: 0 10px
+        &.checkbox
+            text-align: center
 
     th
         line-height: 200%
         text-align: left
+        color: #333
+        background-color: white
+        border-right: 1px solid #333
         &:first-child
-            text-align: center
+            // text-align: center
+        &:last-child
+            border-right: 1px solid #fff
 
     tr.specname
-        line-height: 150%
-        text-align: center
+        line-height: 190%
+        // text-align: center
         td
             font-weight: bold
 

@@ -16,6 +16,9 @@ const readFiles = (index, files, parsedFiles, callback) => {
         if (R.isNil(json.description)) {
             json.description = 'no description';
         }
+        if (R.isNil(json.signals)) {
+            json.signals = [];
+        }
         json.fileName = file.name;
         readFiles(
             index + 1,
