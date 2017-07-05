@@ -1,12 +1,34 @@
-html {
-  background-color: #333; }
+html, body {
+  background-color: #333;
+  margin: 0;
+  padding: 0; }
 
 .view {
   margin: 0px 10px 30px 10px; }
 
-.add-specs {
+#container {
   color: white;
-  font-family: monospace; }
+  font-family: monospace;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end; }
+
+#left-pane {
+  background-color: #444;
+  min-width: 200px;
+  border-right: 1px dotted white;
+  min-height: 100vh;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1; }
+
+#right-pane {
+  padding: 0 20px; }
 
 .dropzone {
   height: 30px;

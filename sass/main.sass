@@ -1,16 +1,32 @@
-html
+html, body
     background-color: #333
-
+    margin: 0
+    padding: 0
 
 .view
     margin: 0px 10px 30px 10px
 
-.add-specs
+#container
     color: white
     font-family: monospace
-    // width: 800px
-    // position: relative
-    // right: -800px
+    display: flex
+    flex-wrap: nowrap
+    justify-content: flex-end
+    // align-items: stretch
+
+#left-pane
+    background-color: #444
+    min-width: 200px
+    border-right: 1px dotted white
+    min-height: 100vh
+    flex-grow: 1
+    // order: 1
+
+#right-pane
+    padding: 0 20px
+    // min-height: 100vh
+    // flex-grow: 1
+    // order: 1
 
 .dropzone
     height: 30px

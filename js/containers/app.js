@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import Mapping from '../components/mapping';
+import Views from '../components/views';
 import { addSpecs, updateMapping } from '../actions/actions';
 import getMapping from '../selectors/get_mapping';
 
@@ -17,19 +18,27 @@ class App extends Component {
     }
 
     render() {
-        return (<div className="add-specs">
-            <Dropzone
-              className="dropzone"
-              accept=".json"
-              onDrop={this.onDrop}
-            >
-                <p>Try dropping some files here, or click to select files to upload.</p>
-            </Dropzone>
-            <Mapping
-              specsTable={this.props.specsTable}
-              mapping={this.props.mapping}
-              updateMapping={updateMapping}
-            />
+        return (<div id="container">
+            <div id="left-pane">
+                <Views
+                  specs={this.props.specs}
+                  mapping={this.props.mapping}
+                />
+            </div>
+            <div id="right-pane">
+                <Dropzone
+                  className="dropzone"
+                  accept=".json"
+                  onDrop={this.onDrop}
+                >
+                    <p>Try dropping some files here, or click to select files to upload.</p>
+                </Dropzone>
+                <Mapping
+                  specsTable={this.props.specsTable}
+                  mapping={this.props.mapping}
+                  updateMapping={updateMapping}
+                />
+            </div>
         </div>);
     }
 }
