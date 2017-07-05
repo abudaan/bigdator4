@@ -49,7 +49,7 @@ const createMapping = (specsTable, mapping, updateMapping) => {
                 <td
                   key={getKey()}
                 >
-                    {`  - ${signalName}`}
+                    {`\u00A0\u00A0-\u00A0${signalName}`}
                 </td>
                 {createCheckboxes(signalName, spec.signals, mapping, updateMapping)}
             </tr>, otherSpec.signals);

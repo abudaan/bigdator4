@@ -17,8 +17,9 @@ class App extends Component {
     }
 
     render() {
-        return (<div className="dropzone">
+        return (<div className="add-specs">
             <Dropzone
+              className="dropzone"
               accept=".json"
               onDrop={this.onDrop}
             >
