@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import Mapping from '../components/mapping';
-import { addSpecs } from '../actions/actions';
+import { addSpecs, updateMapping } from '../actions/actions';
 import getMapping from '../selectors/get_mapping';
 
 class App extends Component {
@@ -24,7 +24,11 @@ class App extends Component {
             >
                 <p>Try dropping some files here, or click to select files to upload.</p>
             </Dropzone>
-            <Mapping specsTable={this.props.specsTable} mapping={this.props.mapping} />
+            <Mapping
+              specsTable={this.props.specsTable}
+              mapping={this.props.mapping}
+              updateMapping={updateMapping}
+            />
         </div>);
     }
 }
@@ -40,8 +44,8 @@ const mapStateToProps = (state) => {
 };
 
 App.propTypes = {
+    mapping: PropTypes.shape({ [PropTypes.string]: PropTypes.object }).isRequired,
     specs: PropTypes.arrayOf(PropTypes.object).isRequired,
-    mapping: PropTypes.arrayOf(PropTypes.object).isRequired,
     specsTable: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 

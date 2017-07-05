@@ -8,7 +8,23 @@ const getKey = () => {
     return `key_${index}`;
 };
 
-const createMapping = (specsTable, mapping) => {
+const createCheckboxes = (signalName, signals, mapping, updateMapping) => R.map((signal) => {
+    const id = `${signalName}:${signal}`;
+    return (<td
+      key={getKey()}
+      className="checkbox"
+    >
+        <input
+          id={id}
+          key={id}
+          type="checkbox"
+          checked={R.isNil(mapping[id]) === false}
+          onChange={updateMapping}
+        />
+    </td>);
+}, signals);
+
+const createMapping = (specsTable, mapping, updateMapping) => {
     if (specsTable.length < 2) {
         return <div />;
     }
@@ -29,14 +45,13 @@ const createMapping = (specsTable, mapping) => {
                     {otherSpec.name}
                 </td>
             </tr>);
-            const a = R.repeat(1, spec.signals.length);
             const r = R.map(signalName => <tr key={getKey()}>
                 <td
                   key={getKey()}
                 >
                     {`  - ${signalName}`}
                 </td>
-                {R.map(() => <td key={getKey()} className="checkbox"><input type="checkbox" key={getKey()} /></td>, a)}
+                {createCheckboxes(signalName, spec.signals, mapping, updateMapping)}
             </tr>, otherSpec.signals);
             return [n, ...r];
         }, spec.otherSpecs);
@@ -55,12 +70,13 @@ const createMapping = (specsTable, mapping) => {
 };
 
 const Mapping = props => (<div>
-    {createMapping(props.specsTable, props.mapping)}
+    {createMapping(props.specsTable, props.mapping, props.updateMapping)}
 </div>);
 
 Mapping.propTypes = {
-    mapping: PropTypes.arrayOf(PropTypes.object).isRequired,
+    mapping: PropTypes.shape({ [PropTypes.string]: PropTypes.object }).isRequired,
     specsTable: PropTypes.arrayOf(PropTypes.object).isRequired,
+    updateMapping: PropTypes.func.isRequired,
 };
 
 export default Mapping;

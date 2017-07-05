@@ -1,6 +1,6 @@
 import R from 'ramda';
 import { getStore } from '../reducers/store';
-import { NEW_SPECS } from '../actions/constants';
+import { NEW_SPECS, MAPPING_CHANGED } from '../actions/constants';
 
 const dispatch = getStore().dispatch;
 
@@ -51,11 +51,18 @@ const addSpecs = (acceptedFiles, rejectedFiles) => {
     }
 };
 
-const mappingChanged = (mapping) => {
-
+const updateMapping = (event) => {
+    const target = event.target;
+    dispatch({
+        type: MAPPING_CHANGED,
+        payload: {
+            id: target.id,
+            value: target.checked ? target.checked : null,
+        },
+    });
 };
 
 export {
     addSpecs,
-    mappingChanged,
+    updateMapping,
 };
