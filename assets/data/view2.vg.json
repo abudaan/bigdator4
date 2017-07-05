@@ -13,6 +13,7 @@
     },
     "data": [
         {
+            "url": "/assets/data/data.json",
             "name": "table",
             "on": [
                 {
