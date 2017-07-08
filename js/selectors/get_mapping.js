@@ -12,22 +12,24 @@ export default createSelector([getUI], (ui) => {
     const signalsBySpec = R.map((spec) => {
         const signals = R.map(s => s.name, spec.signals);
         return {
-            name: spec.fileName,
+            id: spec.id,
             signals,
         };
-    }, specs);
+    }, R.values(specs));
 
-    const specsTable = R.map((spec) => {
-        if (R.length(spec.signals) === 0) {
-            return null;
+    const specsTable = R.reduce((acc, spec) => {
+        if (R.length(spec.signals) > 0) {
+            const otherSpecs = R.filter(s => s.id !== spec.id && s.signals.length > 0, signalsBySpec);
+            return {
+                ...acc,
+                [spec.id]: {
+                    id: spec.id,
+                    signals: spec.signals,
+                    otherSpecs,
+                },
+            };
         }
-        const otherSpecs = R.filter(s => s.name !== spec.name && s.signals.length > 0, signalsBySpec);
-        return {
-            name: spec.name,
-            signals: spec.signals,
-            otherSpecs,
-        };
-    }, signalsBySpec);
-    // console.log(R.reject(R.isNil, specsTable));
-    return R.reject(R.isNil, specsTable);
+        return acc;
+    }, {}, signalsBySpec);
+    return specsTable;
 });

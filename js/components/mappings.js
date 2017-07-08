@@ -8,8 +8,10 @@ const getKey = () => {
     return `key_${index}`;
 };
 
-const createCheckboxes = (signalName, signals, mapping, updateMapping) => R.map((signal) => {
-    const id = `${signalName}:${signal}`;
+const toName = id => id.replace(/__DOT__/g, '.');
+
+const createCheckboxes = (specId, otherSpecId, signalName, signals, mapping, updateMapping) => R.map((signal) => {
+    const id = `${specId}:${signalName}::${otherSpecId}:${signal}`;
     return (<td
       key={getKey()}
       className="checkbox"
@@ -25,12 +27,12 @@ const createCheckboxes = (signalName, signals, mapping, updateMapping) => R.map(
 }, signals);
 
 const createMapping = (specsTable, mapping, updateMapping) => {
-    if (specsTable.length < 2) {
+    if (R.keys(specsTable).length < 2) {
         return <div />;
     }
     const tables = R.map((spec) => {
         const headers = (<tr key={getKey()}>{
-            R.prepend(<th key={getKey()}>{spec.name}</th>, R.map(s => <th key={getKey()}>{s}</th>, spec.signals))
+            R.prepend(<th key={getKey()}>{toName(spec.id)}</th>, R.map(s => <th key={getKey()}>{s}</th>, spec.signals))
         }</tr>);
 
         const rows = R.map((otherSpec) => {
@@ -42,7 +44,7 @@ const createMapping = (specsTable, mapping, updateMapping) => {
                   key={getKey()}
                   colSpan={spec.signals.length + 1}
                 >
-                    {otherSpec.name}
+                    {toName(otherSpec.id)}
                 </td>
             </tr>);
             const r = R.map(signalName => <tr key={getKey()}>
@@ -51,13 +53,13 @@ const createMapping = (specsTable, mapping, updateMapping) => {
                 >
                     {`\u00A0\u00A0-\u00A0${signalName}`}
                 </td>
-                {createCheckboxes(signalName, spec.signals, mapping, updateMapping)}
+                {createCheckboxes(spec.id, otherSpec.id, signalName, spec.signals, mapping, updateMapping)}
             </tr>, otherSpec.signals);
             return [n, ...r];
         }, spec.otherSpecs);
 
-        // <span>{spec.name}</span>
-        return (<div className="mapping" key={spec.name}>
+        // <span>{spec.id}</span>
+        return (<div className="mapping" key={spec.id}>
             <table>
                 <tbody>
                     {headers}
@@ -65,18 +67,18 @@ const createMapping = (specsTable, mapping, updateMapping) => {
                 </tbody>
             </table>
         </div>);
-    }, specsTable);
+    }, R.values(specsTable));
     return tables;
 };
 
-const Mapping = props => (<div>
-    {createMapping(props.specsTable, props.mapping, props.updateMapping)}
+const Mappings = props => (<div>
+    {createMapping(props.specsTable, props.mappings, props.updateMapping)}
 </div>);
 
-Mapping.propTypes = {
-    mapping: PropTypes.shape({ [PropTypes.string]: PropTypes.object }).isRequired,
-    specsTable: PropTypes.arrayOf(PropTypes.object).isRequired,
+Mappings.propTypes = {
+    mappings: PropTypes.shape({ [PropTypes.string]: PropTypes.object }).isRequired,
+    specsTable: PropTypes.shape({ [PropTypes.string]: PropTypes.object }).isRequired,
     updateMapping: PropTypes.func.isRequired,
 };
 
-export default Mapping;
+export default Mappings;

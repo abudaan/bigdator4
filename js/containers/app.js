@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
-import Mapping from '../components/mapping';
+import Mappings from '../components/mappings';
 import Views from '../components/views';
 import { addSpecs, updateMapping } from '../actions/actions';
 import getMapping from '../selectors/get_mapping';
@@ -22,7 +22,8 @@ class App extends Component {
             <div id="left-pane">
                 <Views
                   specs={this.props.specs}
-                  mapping={this.props.mapping}
+                  datasets={this.props.datasets}
+                  mappings={this.props.mappings}
                 />
             </div>
             <div id="right-pane">
@@ -33,9 +34,9 @@ class App extends Component {
                 >
                     <p>Try dropping some files here, or click to select files to upload.</p>
                 </Dropzone>
-                <Mapping
+                <Mappings
                   specsTable={this.props.specsTable}
-                  mapping={this.props.mapping}
+                  mappings={this.props.mappings}
                   updateMapping={updateMapping}
                 />
             </div>
@@ -49,14 +50,16 @@ const mapStateToProps = (state) => {
     return {
         specsTable,
         specs: ui.specs,
-        mapping: ui.mapping,
+        datasets: ui.datasets,
+        mappings: ui.mappings,
     };
 };
 
 App.propTypes = {
-    mapping: PropTypes.shape({ [PropTypes.string]: PropTypes.object }).isRequired,
-    specs: PropTypes.arrayOf(PropTypes.object).isRequired,
-    specsTable: PropTypes.arrayOf(PropTypes.object).isRequired,
+    specs: PropTypes.shape({ [PropTypes.string]: PropTypes.object }).isRequired,
+    datasets: PropTypes.shape({ [PropTypes.string]: PropTypes.object }).isRequired,
+    mappings: PropTypes.shape({ [PropTypes.string]: PropTypes.object }).isRequired,
+    specsTable: PropTypes.shape({ [PropTypes.string]: PropTypes.object }).isRequired,
 };
 
 export default connect(mapStateToProps)(App);

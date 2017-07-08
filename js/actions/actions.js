@@ -19,6 +19,7 @@ const readFiles = (index, files, parsedFiles, callback) => {
         if (R.isNil(json.signals)) {
             json.signals = [];
         }
+        json.id = file.name.replace(/\./g, '__DOT__');
         json.fileName = file.name;
         readFiles(
             index + 1,
@@ -40,11 +41,19 @@ const addSpecs = (acceptedFiles, rejectedFiles) => {
 
     if (acceptedFiles.length > 0) {
         readFiles(0, acceptedFiles, [], (parsedFiles) => {
-            const f1 = R.filter(f => f.$schema === 'https://vega.github.io/schema/vega/v3.0.json', parsedFiles);
+            const datasets = R.reduce((acc, d) => ({
+                ...acc,
+                [d.id]: d,
+            }), {}, R.filter(f => R.isNil(f.$schema), parsedFiles));
+            const specs = R.reduce((acc, s) => ({
+                ...acc,
+                [s.id]: s,
+            }), {}, R.filter(f => f.$schema === 'https://vega.github.io/schema/vega/v3.0.json', parsedFiles));
             dispatch({
                 type: NEW_SPECS,
                 payload: {
-                    files: f1,
+                    specs,
+                    datasets,
                 },
             });
         });
