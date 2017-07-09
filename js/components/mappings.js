@@ -11,7 +11,7 @@ const getKey = () => {
 const toName = id => id.replace(/__DOT__/g, '.');
 
 const createCheckboxes = (specId, otherSpecId, signalName, signals, mapping, updateMapping) => R.map((signal) => {
-    const id = `${specId}:${signalName}::${otherSpecId}:${signal}`;
+    const id = `${specId}:${signal}::${otherSpecId}:${signalName}`;
     return (<td
       key={getKey()}
       className="checkbox"

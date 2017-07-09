@@ -14,31 +14,63 @@ const addView = (container, spec, datasets) => {
     elem.id = spec.id;
     elem.className = 'view';
     container.appendChild(elem);
-    viewMap[id] = new vega.View(vega.parse(spec));
 
     mapIndexed((data, i) => {
         let dataset;
         if (R.isNil(data.url) === false && data.url.indexOf('http:') !== 0) {
             dataset = datasets[data.url.replace(/\./g, '__DOT__')];
             if (R.isNil(dataset) === false) {
-                viewMap[id].insert(dataset.name, dataset.values);
-                // delete spec.data[i].url; // no need to load from the url anymore
-                // spec.data[i].values = dataset.values;
+                delete spec.data[i].url; // no need to load from the url anymore
+                spec.data[i].values = dataset.values;
             }
         }
         return 0;
     }, spec.data);
 
-    viewMap[id]
-        .run()
+    const view = new vega.View(vega.parse(spec))
         .renderer('svg')
         // .logLevel(vega.Debug)
-        .initialize(`#${id}`);
+        .initialize(`#${id}`)
+        .run();
+
+    viewMap[id] = {
+        listeners: [],
+        view,
+    };
 };
 
 const addMappings = (mappings) => {
+    R.forEach((o) => {
+        R.forEach((l) => {
+            o.view.removeSignalListener(l[0], l[1]);
+        }, o.listeners);
+        o.bindings = [];
+    }, R.values(viewMap));
+
     R.forEach((mapping) => {
-        console.log(mapping);
+        const s = mapping.split('::');
+        const s0 = s[0].split(':');
+        const s1 = s[1].split(':');
+
+        const emitterId = s0[0];
+        const emitterSignal = s0[1];
+        const receiverId = s1[0];
+        const receiverSignal = s1[1];
+        // console.log(mapping);
+        // console.log(emitterId, emitterSignal, receiverId, receiverSignal);
+
+        const emitter = viewMap[emitterId].view;
+        const receiver = viewMap[receiverId].view;
+        const handler = (name: string, data: *) => {
+            try {
+                receiver.signal(receiverSignal, data).run();
+            } catch (e) {
+                console.error(`incompatible data between signals: ${emitterSignal} -> ${receiverSignal}`, data);
+            }
+        };
+
+        emitter.addSignalListener(emitterSignal, handler);
+        viewMap[emitterId].bindings.push([emitterSignal, handler]);
     }, R.keys(mappings));
 };
 

@@ -20,6 +20,15 @@ export const ui = (state = uiInitialState, action) => {
             },
         };
     } else if (action.type === MAPPING_CHANGED) {
+        if (action.payload.value !== true) {
+            const m = { ...state.mappings };
+            delete m[action.payload.id];
+            return {
+                ...state,
+                mappings: m,
+            };
+        }
+
         return {
             ...state,
             mappings: {

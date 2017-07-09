@@ -126,7 +126,7 @@
                             "markname": "bar"
                         }
                     ],
-                    "update": "datum"
+                    "encode": "hover"
                 },
                 {
                     "events": [
@@ -135,7 +135,7 @@
                             "markname": "bar"
                         }
                     ],
-                    "update": "{}"
+                    "encode": "active"
                 }
             ]
         }
@@ -322,16 +322,17 @@
                     "y2": {
                         "scale": "yscale",
                         "value": 0
-                    },
-                    "fill": [
-                        {
-                            "test": "datum.category === tooltip.category || datum.category === selectedCategory.category",
-                            "value": "orange"
-                        },
-                        {
-                            "value": "steelblue"
-                        }
-                    ]
+                    }
+                },
+                "hover": {
+                    "fill":  {
+                        "value": "orange"
+                    }
+                },
+                "active": {
+                    "fill": {
+                        "value": "steelblue"
+                    }
                 }
             }
         },
