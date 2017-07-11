@@ -81,20 +81,22 @@ class Views extends Component {
     }
 
     componentDidMount() {
-        this.element = document.getElementById('left-pane');
-        // console.log(this.element);
+        this.leftPane = document.getElementById('left-pane');
     }
 
     render() {
-        if (R.isNil(this.element) === false) {
-            R.forEach((spec) => {
-                // if (R.isNil(document.getElementById(spec.id))) {
-                //     addView(this.element, spec, this.props.datasets);
-                // } else {
-                //     console.log('no need to update views');
-                // }
-                addView(this.element, spec, this.props.datasets);
-            }, R.values(this.props.specs));
+        if (R.isNil(this.leftPane) === false) {
+            if (this.props.updated.specs === true || this.props.updated.datasets === true) {
+                // console.log('render');
+                R.forEach((spec) => {
+                    // if (R.isNil(document.getElementById(spec.id))) {
+                    //     addView(this.leftPane, spec, this.props.datasets);
+                    // } else {
+                    //     console.log('no need to update views');
+                    // }
+                    addView(this.leftPane, spec, this.props.datasets);
+                }, R.values(this.props.specs));
+            }
             addMappings(this.props.mappings);
         }
         return false;
@@ -105,6 +107,7 @@ Views.propTypes = {
     specs: PropTypes.shape({ [PropTypes.string]: PropTypes.object }).isRequired,
     datasets: PropTypes.shape({ [PropTypes.string]: PropTypes.object }).isRequired,
     mappings: PropTypes.shape({ [PropTypes.string]: PropTypes.object }).isRequired,
+    updated: PropTypes.shape([PropTypes.string]: PropTypes.bool).isRequired,
 };
 
 export default Views;

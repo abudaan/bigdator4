@@ -9,30 +9,27 @@ html, body
 #container
     color: white
     font-family: monospace
-    display: flex
-    flex-wrap: nowrap
-    justify-content: flex-end
-    // align-items: stretch
+    &:after
+        content: ""
+        display: table
+        clear: both
 
 #left-pane
+    float: left
+    padding: 20px
     background-color: #444
-    min-width: 200px
-    border-right: 1px dotted white
+    min-width: 300px
+    // border-right: 1px dotted white
     min-height: 100vh
-    flex-grow: 1
-    // order: 1
 
 #right-pane
+    float: right
     padding: 0 20px
-    // min-height: 100vh
-    // flex-grow: 1
-    // order: 1
+    min-height: 100vh
 
 .dropzone
-    height: 30px
+    min-height: 30px
     border: 1px dotted white
-    display: flex
-    align-items: center
     text-align: center
     padding: 1px 10px
     margin-bottom: 20px

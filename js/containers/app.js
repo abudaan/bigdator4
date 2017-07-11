@@ -13,17 +13,33 @@ class App extends Component {
         this.onDrop = this.dropHandler.bind(this);
     }
 
+    componentDidMount() {
+        this.container = document.getElementById('container');
+        this.leftPane = document.getElementById('left-pane');
+        this.rightPane = document.getElementById('right-pane');
+    }
+
     dropHandler(acceptedFiles, rejectedFiles) {
         addSpecs(acceptedFiles, rejectedFiles);
     }
 
     render() {
+        // whoo, this is ugly!
+        setTimeout(() => {
+            const wl = this.leftPane.getBoundingClientRect().width;
+            const wr = this.rightPane.getBoundingClientRect().width;
+            const w = wl + wr;
+            console.log(wl, wr, w);
+            this.container.style.width = `${w}px`;
+        }, 100);
+
         return (<div id="container">
             <div id="left-pane">
                 <Views
                   specs={this.props.specs}
                   datasets={this.props.datasets}
                   mappings={this.props.mappings}
+                  updated={this.props.updated}
                 />
             </div>
             <div id="right-pane">
@@ -52,6 +68,7 @@ const mapStateToProps = (state) => {
         specs: ui.specs,
         datasets: ui.datasets,
         mappings: ui.mappings,
+        updated: ui.updated,
     };
 };
 
@@ -59,6 +76,7 @@ App.propTypes = {
     specs: PropTypes.shape({ [PropTypes.string]: PropTypes.object }).isRequired,
     datasets: PropTypes.shape({ [PropTypes.string]: PropTypes.object }).isRequired,
     mappings: PropTypes.shape({ [PropTypes.string]: PropTypes.object }).isRequired,
+    updated: PropTypes.shape([PropTypes.string]: PropTypes.bool).isRequired,
     specsTable: PropTypes.shape({ [PropTypes.string]: PropTypes.object }).isRequired,
 };
 

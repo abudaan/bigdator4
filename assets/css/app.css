@@ -8,37 +8,27 @@ html, body {
 
 #container {
   color: white;
-  font-family: monospace;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: nowrap;
-      flex-wrap: nowrap;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end; }
+  font-family: monospace; }
+  #container:after {
+    content: "";
+    display: table;
+    clear: both; }
 
 #left-pane {
+  float: left;
+  padding: 20px;
   background-color: #444;
-  min-width: 200px;
-  border-right: 1px dotted white;
-  min-height: 100vh;
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1; }
+  min-width: 300px;
+  min-height: 100vh; }
 
 #right-pane {
-  padding: 0 20px; }
+  float: right;
+  padding: 0 20px;
+  min-height: 100vh; }
 
 .dropzone {
-  height: 30px;
+  min-height: 30px;
   border: 1px dotted white;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   text-align: center;
   padding: 1px 10px;
   margin-bottom: 20px; }
