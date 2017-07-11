@@ -5,8 +5,8 @@ This is an attempt to improve [bigdator3](https://github.com/abudaan/bigdator3).
 In this app you can upload your own Vega specs at will. The data of your specs should either be:
 
 1. included in the spec
-2. referenced with a global url (e.g. "src"="http://global.url/data.json")
-3. referenced with a local url to the same folder (e.g. "src"="data.json")
+2. referenced with a global url (e.g. `"src"="http://global.url/data.json"`)
+3. referenced with a local url to the same folder (e.g. `"src"="data.json"`)
 
 If you use the 3rd option you can simply upload your data json together with the spec, but you can upload the data before or afterwards as well.
 
