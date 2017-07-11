@@ -1,6 +1,6 @@
 ## Setting up interaction between Vega3 views in separate div elements
 
-This is an attempt to improve [bigdator3](https://github.com/abudaan/bigdator3). You might want to read the [README](https://github.com/abudaan/bigdator3/blob/master/README.md) of this project first to get acquainted to the problem this project seeks to solve.
+This is an attempt to improve [bigdator3](https://github.com/abudaan/bigdator3); you might want to read the [README](https://github.com/abudaan/bigdator3/blob/master/README.md) of this project first to get acquainted to the problem this project seeks to solve.
 
 In this app you can upload your own Vega specs at will. The data of your specs should either be:
 
